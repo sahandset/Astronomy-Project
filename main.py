@@ -73,7 +73,7 @@ texty = [scale2(7.031E7), scale2(1.092E8), scale2(21.496E8), scale2(2.2739E8), s
 
 for i, nasaid in enumerate([1, 2, 3, 4, 5, 6, 7, 8, 9]):  # Going through the nine planets in the SolarSystem
     obj = Horizons(id = nasaid, location = "@sun", epochs = ss.time, id_type = 'id').vectors()
-    ss.add_planet(Object(nasaid, 20 * sizes[i], colors[i],
+    ss.add_planet(Object(names[i], 20 * sizes[i], colors[i],
                          [np.double(obj[xi]) for xi in ['x', 'y', 'z']],
                          [np.double(obj[vxi]) for vxi in ['vx', 'vy', 'vz']]))
     ax.legend(loc = 'upper right')
