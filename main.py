@@ -62,7 +62,7 @@ class SolarSystem:
 
 plt.style.use('dark_background')
 fig = plt.figure(figsize = [9, 9])
-ax = plt.axes([0., 0., 1., 1], xlim = (-27, 27), ylim = (-27, 27))
+ax = plt.axes([0., 0., 1., 1], xlim = (-35, 35), ylim = (-35, 35))
 ax.set_aspect('equal')
 ax.axis('off')
 # ss = SolarSystem(Object("Sun", scale3(1.3927E6), 'yellow', [0, 0, 0], [0, 0, 0]))
@@ -84,5 +84,9 @@ def animate(i):
     return ss.evolve()
 
 ani = animation.FuncAnimation(fig, animate, repeat = False, frames = sim_duration, blit = True, interval = 20)
+
+Writer = animation.writers['ffmpeg']
+writer = Writer(fps=15, metadata=dict(artist='Me'), bitrate=1800)
+ani.save('ss.mp4', writer = writer)
 
 plt.show()
