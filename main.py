@@ -61,8 +61,8 @@ class SolarSystem:
         return plots + lines + [self.timestamp]
 
 plt.style.use('dark_background')
-fig = plt.figure(figsize = [5, 5])
-ax = plt.axes([0., 0., 1., 1], xlim = (-10, 10), ylim = (-10, 10))
+fig = plt.figure(figsize = [9, 9])
+ax = plt.axes([0., 0., 1., 1], xlim = (-27, 27), ylim = (-27, 27))
 ax.set_aspect('equal')
 ax.axis('off')
 # ss = SolarSystem(Object("Sun", scale3(1.3927E6), 'yellow', [0, 0, 0], [0, 0, 0]))
