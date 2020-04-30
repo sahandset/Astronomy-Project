@@ -12,23 +12,23 @@ sim_duration = 10 * 365            # Running the simulation for 10 years, can be
 
 
 def scale(metric): # planets
-    return metric / 10 ** 5
+    return metric / 10 ** 6
 
 def scale2(metric):
     return metric / 10 ** 2 # orbits
 
 def scale3(metric):
-    return metric / 15000  # sun
+    return metric / 10 ** 12  # sun
 
 
 class Object:                   # define the objects: the Sun, Earth, Mercury, etc
-    def __init__(self, name, rad, color, r, v):
+    def __init__(self, planet, name, rad, color, r, v):
         self.name   = name
         self.r      = np.array(r, dtype = np.float)
         self.v      = np.array(v, dtype = np.float)
         self.xs     = []
         self.ys     = []
-        self.plot   = ax.scatter(r[0], r[1], color = color, s = rad ** 1, edgecolors = None, zorder = 10, label = "{}".format(name))
+        self.plot   = ax.scatter(r[0], r[1], color = color, s = rad ** 1, edgecolors = None, zorder = 10, label = "{}".format(self.name))
         self.line,  = ax.plot([], [], color = color, linewidth = 1.4)
 
 class SolarSystem:
@@ -66,7 +66,7 @@ ax = plt.axes([0., 0., 1., 1], xlim = (-10, 10), ylim = (-10, 10))
 ax.set_aspect('equal')
 ax.axis('off')
 # ss = SolarSystem(Object("Sun", scale3(1.3927E6), 'yellow', [0, 0, 0], [0, 0, 0]))
-ss = SolarSystem(Object("Sun", 1000, 'yellow', [0, 0, 0], [0, 0, 0]))
+ss = SolarSystem(Object("Sun", "Sun", scale(1.39 * 10**6), 'yellow', [0, 0, 0], [0, 0, 0]))
 ss.time = Time(sim_start_date).jd
 colors = ['gray', 'orange', 'blue', 'red', 'navajowhite', 'goldenrod', 'mediumaquamarine', 'steelblue', 'lightgray'] # colors of planets in order
 sizes = [scale(4879.4), scale(12104), scale(12742), scale(6779), scale(139820), scale(116460), scale(50724), scale(49244), scale(2376.6)] # Diameters compared to Earth
@@ -75,7 +75,8 @@ sizes = [scale(4879.4), scale(12104), scale(12742), scale(6779), scale(139820), 
 
 for i, nasaid in enumerate([1, 2, 3, 4, 5, 6, 7, 8, 9]):  # Going through the nine planets in the SolarSystem
     obj = Horizons(id = nasaid, location = "@sun", epochs = ss.time, id_type = 'id').vectors()
-    ss.add_planet(Object(nasaid, 1000 * sizes[i], colors[i],[np.double(obj[xi]) for xi in ['x','y','z']], [np.double(obj[vxi]) for vxi in ['vx', 'vy', 'vz']]))
+    planet = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']
+    ss.add_planet(Object(nasaid, planet[i], 1000 * sizes[i], colors[i],[np.double(obj[xi]) for xi in ['x','y','z']], [np.double(obj[vxi]) for vxi in ['vx', 'vy', 'vz']]))
     ax.legend(loc = 'upper right')
 
 
