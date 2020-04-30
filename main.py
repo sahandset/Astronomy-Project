@@ -86,7 +86,7 @@ def animate(i):
 ani = animation.FuncAnimation(fig, animate, repeat = False, frames = sim_duration, blit = True, interval = 20)
 
 Writer = animation.writers['ffmpeg']
-writer = Writer(fps=15, metadata=dict(artist='Me'), bitrate=1800)
+writer = Writer(fps=60, metadata=dict(artist='Me'), bitrate=1800)
 ani.save('ss.mp4', writer = writer)
 
 plt.show()
